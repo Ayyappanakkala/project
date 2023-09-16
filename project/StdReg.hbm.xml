@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!-- Mapping for the StdRegForm class -->
+    <class name="com.studentReg.StdRegForm" table="StdRegForm">
+        <id name="RegID" column="RegID" type="int">
+            <generator class="increment"/>
+        </id>
+        <!-- Embeddable class mappings for StudentName -->
+        <component name="sname" class="com.studentReg.StudentName">
+            <property name="Std_FName" column="sFName" type="string"/>
+            <property name="Std_MName" column="sMName" type="string"/>
+            <property name="Std_LName" column="sLName" type="string"/>
+        </component>
+        
+        <!-- Embeddable class mappings for FatherName -->
+        <component name="fname" class="com.studentReg.FatherName">
+            <property name="FName" type="string"/>
+            <property name="MName" type="string"/>
+            <property name="LName" type="string"/>
+        </component>
+        
+        <!-- Other properties here -->
+        <property name="DOB" type="java.time.LocalDate"/>
+        <property name="Gender" type="string"/>
+        <property name="InterMark" type="double"/>
+        <property name="Aadhar_No" type="string"/>
+        <property name="Mobile_No" type="string"/>
+        <property name="Mail" type="string"/>
+        
+        <!-- Embeddable class mappings for Address -->
+        <component name="address" class="com.studentReg.Address">
+            <property name="DoorNo" type="string"/>
+            <property name="City" type="string"/>
+            <property name="PinCode" type="string"/>
+        </component>
+        
+        <!-- Embeddable class mappings for courseSelection -->
+        <component name="cSelection" class="com.studentReg.courseSelection">
+            <property name="Priority_1" type="string"/>
+            <property name="Priority_2" type="string"/>
+            <property name="Priority_3" type="string"/>
+        </component>
+    </class>
+    
+    <!-- Mapping for the Admin class -->
+    <class name="com.CollegeAdimission.Admin" table="admin">
+        <id name="RegID" type="int">
+        </id>
+        <!-- ... other properties ... -->
+        <property name="InterMark" type="double"/>
+        <property name="Priority_1" type="string"/>
+        <property name="Priority_2" type="string"/>
+        <property name="Priority_3" type="string"/>
+        <property name="AllocatedSeat" type="string"/>
+
+        <!-- Define the one-to-one mapping with StdRegForm -->
+        <one-to-one name="stdRegForm" class="com.studentReg.StdRegForm" constrained="true"/>
+    </class>
+    
+    <!-- Mapping for the Course class -->
+    <class name="com.CollegeAdimission.Course" table="Course">
+        <!-- Primary key mapping -->
+        <id name="id" type="int">
+            <generator class="identity" />
+        </id>
+
+        <!-- Property mappings -->
+        <property name="courseCode" type="string">
+            <column name="courseCode" />
+        </property>
+        
+        <property name="courseName" type="string">
+            <column name="courseName" />
+        </property>
+
+        <property name="totalSeats" type="int">
+            <column name="totalSeats" />
+        </property>
+
+        <property name="allocatedSeats" type="int">
+            <column name="allocatedSeats" />
+        </property>
+
+        <property name="availableSeats" type="int">
+            <column name="availableSeats" />
+        </property>
+
+        <!-- Optional elements can go here, such as associations, queries, etc. -->
+    </class>
+
+    <!-- Mapping for the Login class -->
+    <class name="com.authentication.Login" table="users">  
+        <id name="id" type="int" column="id">  
+            <generator class="assigned"/>             
+        </id>  
+  
+        <property name="username">  
+            <column name="username" />  
+        </property>  
+        <property name="password">  
+            <column name="password"/>  
+        </property>  
+    </class>
+</hibernate-mapping>
