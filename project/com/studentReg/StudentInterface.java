@@ -71,7 +71,7 @@ public class StudentInterface {
 			//
 			Pattern patternadhar = Pattern.compile("^[0-9]{12}$");
 			while(true){
-				System.out.print("Enter your Indian Aadhar card number: \n");
+				System.out.print("Enter your Aadhar card number: \n");
 				String aadharNumber = scanner.next();
 
 				// Match the entered Aadhar number with the pattern
@@ -82,7 +82,7 @@ public class StudentInterface {
 					break;
 				}
 				else {
-					System.out.println("Invalid Indian Aadhar card number. Please enter a 12-digit numeric Aadhar number.");
+					System.out.println("Invalid Aadhar card number. Please enter a 12-digit numeric Aadhar number.");
 				}
 
 			}
@@ -92,7 +92,7 @@ public class StudentInterface {
 			//
 			Pattern patternphone = Pattern.compile("^[6789]\\d{9}$");
 			while(true) {
-				System.out.print("Enter your Indian phone number: \n");
+				System.out.print("Enter your phone number: \n");
 				String phoneNumber = scanner.next();
 
 				// Remove any spaces or hyphens from the input
@@ -106,7 +106,7 @@ public class StudentInterface {
 					break;
 				} 
 				else {
-					System.out.println("Invalid Indian phone number. Please enter a 10-digit number");
+					System.out.println("Invalid phone number. Please enter a 10-digit number");
 				}
 			}
 
@@ -163,40 +163,17 @@ public class StudentInterface {
 			session.beginTransaction();
 			session.save(Student);
 			session.getTransaction().commit();
-			String formatted = String.format(
-				    "--------------Registration Details-------------\n"+
-				    "Registration ID    : %s%n"+
-				    "Student Name       : %s %s %s%n"+
-				    "Father Name        : %s %s %s%n"+
-				    "DOB                : %s%n"+
-				    "Intermediate Marks : %s%n"+
-				    "Aadhra N.o          : %s%n"+
-				    "Mobile N.o          : %s%n"+
-				    "Mail               : %s%n"+
-				    "Door N.o            : %s%n"+
-				    "City               : %s%n"+
-				    "Pin Code            : %s%n"+
-				    "Priority 1         : %s%n"+
-				    "Priority 2         : %s%n"+
-				    "Priority 3         : %s%n"+
-				    Student.getRegID(),
-				    Student.getSname().getStd_FName(),
-				    Student.getSname().getStd_MName(),
-				    Student.getSname().getStd_LName(),
-				    Student.getInterMark(),
-				    Student.getAadhar_No(),
-				    Student.getMobile_No(),
-				    Student.getMail(),
-				    Student.getAddress().getDoorNo(),
-				    Student.getAddress().getCity(),
-				    Student.getAddress().getPinCode(),
-				    Student.getcSelection().getPriority_1(),
-				    Student.getcSelection().getPriority_2(),
-				    Student.getcSelection().getPriority_3()
-				);
 
-			System.out.println("Registration successful! Registration ID: " + Student.getRegID());
-			System.out.println(formatted);
+			System.out.println("Registration successful! Registration ID: ");
+			System.out.println("Student ID: " + Student.getRegID()+"\n"+"Student Name: " + Student.getSname().getStd_FName() + " " +
+	                Student.getSname().getStd_MName() + " " +
+	                Student.getSname().getStd_LName()+"\n"+"Father's Name: " + Student.getFname().getFName() + " " +
+	                Student.getFname().getMName() + " " +
+	                Student.getFname().getLName()+"\n"+"DOB: " + Student.getDOB()+"\n"+"Intermediate marks: " + Student.getInterMark()+"\n"+"Gender: " + Student.getGender()
+	                +"\n"+"PhoneNo: " + Student.getMobile_No()+"\n"+"Email: " + Student.getMail()+"\n"+
+	                "Address: " + Student.getAddress().getDoorNo() + " " + Student.getAddress().getCity() + " " +
+	                Student.getAddress().getPinCode()+"\n"+"Priority: " + Student.getcSelection().getPriority_1() + " " +
+	                Student.getcSelection().getPriority_2() + " " + Student.getcSelection().getPriority_3());
 		}
 		catch(HibernateException he) {
 		    System.out.println("Hibernate Exception: " + he.getMessage());

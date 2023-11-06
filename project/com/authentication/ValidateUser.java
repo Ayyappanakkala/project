@@ -1,18 +1,14 @@
 package com.authentication;
 
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.TypedQuery;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 
 public class ValidateUser {
+	
 	public static boolean Validate() {
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();	
 		
@@ -21,30 +17,20 @@ public class ValidateUser {
 
 	     // creating transaction object
 	     Transaction t = session.beginTransaction();
-	     
-		
-		@SuppressWarnings("resource")
+		System.out.println("-----Welcome to the login Section-----");
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter username ");
 		String user = sc.nextLine();
 		System.out.println("Enter Password ");
 		String pass = sc.nextLine();
-
 		// Create a CriteriaBuilder
-		CriteriaBuilder builder = session.getCriteriaBuilder();
+		 String hql = "FROM Login u WHERE u.username = :username AND u.password = :password";
+         TypedQuery<Login> query = session.createQuery(hql, Login.class);
+         query.setParameter("username", user);
+         query.setParameter("password", pass);
 
-		// Create a CriteriaQuery for the Login entity
-		CriteriaQuery<Login> criteriaQuery = builder.createQuery(Login.class);
-		Root<Login> root = criteriaQuery.from(Login.class);
-
-		// Add predicates to the query for username and password
-		criteriaQuery.where(
-		    builder.equal(root.get("username"), user),
-		    builder.equal(root.get("password"), pass)
-		);
-
-		// Execute the query
-		List<Login> results = session.createQuery(criteriaQuery).getResultList();
+         // Execute the query and get the results
+         List<Login> results = query.getResultList();
 		
 		boolean Status;
 
